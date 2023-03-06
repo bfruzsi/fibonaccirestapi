@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import java.lang.Exception
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/")
@@ -19,8 +19,8 @@ class FibonacciController {
     @GetMapping(value = ["fibonacci"])
     open fun fibonacci(@RequestParam n: Int): Int? {
         // TODO - If n is greater than 46 then return BAD REQUEST use HttpStatus
-        if (n > 46)
-                return HttpStatus.BAD_REQUEST.value()
+        if (n > 46 || n < 0)
+                throw ResponseStatusException(HttpStatus.BAD_REQUEST)
         return fibonacciService?.fibonacci(n)
     }
 }
